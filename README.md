@@ -49,8 +49,8 @@ http://127.0.0.1:5500/web_ui.html
 - Clear button: resets input and hides results.
 
 # tracelinkguard/
-# ├── tracelinkguard.py       # FastAPI backend
-# ├── web_ui.html        # Frontend UI
-# ├── requirements.txt   # Python dependencies
-# ├── README.md          # Documentation
-# └── .gitignore         # Git ignore rules
+   ├── tracelinkguard.py  # FastAPI backend
+   ├── web_ui.html        # Frontend UI
+   ├── requirements.txt   # Python dependencies
+   ├── README.md          # Documentation
+   └── .gitignore         # Git ignore rules
