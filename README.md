@@ -48,9 +48,9 @@ http://127.0.0.1:5500/web_ui.html
 - Suspicious domain: http://suspicious-example.biz → shows “Block: Risk = High” with reasons.
 - Clear button: resets input and hides results.
 
-tracelinkguard/
-├── tracelinkguard.py       # FastAPI backend
-├── web_ui.html        # Frontend UI
-├── requirements.txt   # Python dependencies
-├── README.md          # Documentation
-└── .gitignore         # Git ignore rules
+# tracelinkguard/
+# ├── tracelinkguard.py       # FastAPI backend
+# ├── web_ui.html        # Frontend UI
+# ├── requirements.txt   # Python dependencies
+# ├── README.md          # Documentation
+# └── .gitignore         # Git ignore rules
