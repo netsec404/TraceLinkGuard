@@ -1,0 +1,9 @@
+
+## 📄 requirements.txt
+
+fastapi
+uvicorn
+httpx
+python-whois
+dnspython
+python-multipart
