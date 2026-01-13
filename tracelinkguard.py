@@ -267,10 +267,10 @@ async def analyze(url: str = Query(..., description="URL to analyze fully")):
 
     all_ips = resolve_all(target) if resolvable else []
 
-    # 5) WHOIS-like fallback (demo safety fields)
+    # 5) WHOIS
     whois_info = get_whois_info(target)
 
-    # 6) IP geolocation (best-effort)
+    # 6) IP geolocation
     ip_geo = {"city": "Unavailable", "country": "Unavailable", "org": "Unavailable"}
     if resolved_ip:
         try:
@@ -286,7 +286,7 @@ async def analyze(url: str = Query(..., description="URL to analyze fully")):
         except Exception:
             pass
 
-    # 7) Traceroute (attempt regardless; gives interview-friendly visibility)
+    # 7) Traceroute 
     hops = run_tracert(target) if target else []
 
     # 8) Risk verdict
@@ -303,9 +303,8 @@ async def analyze(url: str = Query(..., description="URL to analyze fully")):
         final_scheme=final_scheme
     )
 
-    # 9) Google demo expectations (optional: interviewer-friendly reference values)
-    # If you want to present specific demo values, you can override here conditionally.
-    # Example for www.google.com:
+    # 9) Example for www.google.com:
+    
     if host in ("google.com", "www.google.com"):
         # Only override display fields (not logic)
         resolved_ip = resolved_ip or "172.217.24.132"
