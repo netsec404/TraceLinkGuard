@@ -1,4 +1,4 @@
-# Link Guard — Professional tracelinkguard
+# TraceLinkGuard 🔒
 
 Trace Link Guard is a FastAPI-based security tracelinkguard that analyzes URLs and email headers for risk signals.  
 It provides verdicts (Allow / Warn / Block) with transparent reasons, WHOIS details, DNS resolution, traceroute, and IP geolocation.
@@ -20,7 +20,7 @@ It provides verdicts (Allow / Warn / Block) with transparent reasons, WHOIS deta
 1. Clone the repository:
    ```bash
    git clone https://github.com/netsec404/TraceLinkGuard.git
-   cd tracelinkguard
+   cd TraceLinkGuard
 
 2. Create a virtual environment:
 python -m venv venv
@@ -48,7 +48,7 @@ http://127.0.0.1:5500/web_ui.html
 - Suspicious domain: http://suspicious-example.biz → shows “Block: Risk = High” with reasons.
 - Clear button: resets input and hides results.
 
-link-guard/
+tracelinkguard/
 ├── tracelinkguard.py       # FastAPI backend
 ├── web_ui.html        # Frontend UI
 ├── requirements.txt   # Python dependencies
