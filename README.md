@@ -1,56 +1,111 @@
-# TraceLinkGuard 🔒
+# **TraceLinkGuard 🔒**
 
-Trace Link Guard is a FastAPI-based security tracelinkguard that analyzes URLs and email headers for risk signals.  
-It provides verdicts (Allow / Warn / Block) with transparent reasons, WHOIS details, DNS resolution, traceroute, and IP geolocation.
-
----
-
-## 🚀 Features
-- URL analysis with risk scoring
-- WHOIS lookup (Registrar, Domain Age)
-- DNS resolution and traceroute
-- IP geolocation via ipinfo.io
-- Email header analyzer (detects device/OS and SMTP path)
-- Frontend UI (`web_ui.html`) with Analyze + Clear buttons
+TraceLinkGuard is a FastAPI‑based security analyzer that inspects URLs and email headers for risk signals.  
+It provides transparent verdicts (Allow / Medium / Block) with WHOIS details, DNS resolution, traceroute, IP geolocation, and more.
 
 ---
 
-## 🛠️ Installation
+## 🚀 **Features**
+- URL analysis with hardened risk scoring  
+- WHOIS lookup (Registrar, Domain Age, Country)  
+- DNS resolution + multi‑IP lookup  
+- Traceroute (Windows/Linux supported)  
+- IP geolocation via ipinfo.io  
+- Email header analyzer (detects device/OS + SMTP Received chain)  
+- Frontend UI (`web_ui.html`) with **Analyze** + **Clear** buttons  
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/netsec404/TraceLinkGuard.git
-   cd TraceLinkGuard
+---
 
-2. Create a virtual environment:
+## 🛠️ **Installation**
+
+### **1. Clone the repository**
+```bash
+git clone https://github.com/netsec404/TraceLinkGuard.git
+cd TraceLinkGuard
+```
+
+### **2. Create a virtual environment**
+```bash
 python -m venv venv
-source venv/bin/activate   # Linux/Mac
-.\venv\Scripts\activate    # Windows
+```
 
-3. Install dependencies:
+Activate it:
+
+**Windows**
+```bash
+.\venv\Scripts\activate
+```
+
+**Linux / macOS**
+```bash
+source venv/bin/activate
+```
+
+### **3. Install dependencies**
+```bash
 pip install -r requirements.txt
+```
 
-▶️ Usage
-Backend
-Run the FastAPI server:
-uvicorn tracelinkguard:app --reload --port 9000
+---
 
-Frontend
-Serve the HTML UI:
+## ▶️ **Usage**
+
+### **Backend (FastAPI)**
+Start the backend server:
+
+```bash
+uvicorn tracelinkguard:app --reload
+```
+
+This runs the API at:
+
+```
+http://127.0.0.1:8000
+```
+
+### **Frontend**
+Serve the UI using Python’s built‑in server:
+
+```bash
 python -m http.server 5500
+```
 
-Open in browser:
+Open the UI in your browser:
+
+```
 http://127.0.0.1:5500/web_ui.html
+```
 
-🧪 Testing- 
-- Invalid input: abc123 → shows “Please enter a valid URL.”
-- Safe domain: https://www.google.com → shows “Allow: Risk = Low” with Registrar + Domain Age.
-- Suspicious domain: http://suspicious-example.biz → shows “Block: Risk = High” with reasons.
-- Clear button: resets input and hides results.
+Your UI will communicate with the backend at port **8000**.
 
-# tracelinkguard/
-   ├── tracelinkguard.py  # FastAPI backend
-   ├── web_ui.html        # Frontend UI
-   ├── requirements.txt   # Python dependencies
-   ├── README.md          # Documentation
-   └── .gitignore         # Git ignore rules
+---
+
+## 🧪 **Testing**
+
+### **URL Analyzer**
+- **Invalid input:**  
+  `abc123` → “Please enter a valid URL.”
+- **Safe domain:**  
+  `https://www.google.com` → “Allow: Risk = Low” + WHOIS + IP + Geo.
+- **Suspicious domain:**  
+  `http://suspicious-example.biz` → “Block: Risk = High” + reasons.
+- **Clear button:**  
+  Resets input and hides results.
+
+### **Email Header Analyzer**
+Paste raw headers or upload `.eml` to detect:
+- Device/OS (Android, iPhone, Windows, macOS)  
+- SMTP Received chain  
+
+---
+
+## 📁 **Project Structure**
+```
+TraceLinkGuard/
+│
+├── tracelinkguard.py     # FastAPI backend
+├── web_ui.html           # Frontend UI
+├── requirements.txt      # Python dependencies
+├── README.md             # Documentation
+└── .gitignore            # Git ignore rules
+```

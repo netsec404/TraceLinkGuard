@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Trace Link Gaurd</title>
+  <title>Trace Link Guard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     #clear { background: rgba(54, 124, 230, 0.904); color: white; }
@@ -16,7 +16,7 @@
     body { margin: 0; font-family: system-ui, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--text); }
     .wrap { max-width: 1000px; margin: 40px auto; padding: 0 16px; }
     h1 { margin: 0 0 16px; font-size: 24px; }
-    .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+    .row { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; }
     input[type="text"] { width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border);
       background: var(--panel); color: var(--text); outline: none; }
     button { padding: 12px 16px; border-radius: 8px; border: 0; background: var(--blue); color: white; cursor: pointer; }
@@ -37,12 +37,12 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>Trace Link Gaurd</h1>
+  <h1>Trace Link Guard</h1>
 
 <div class="row">
   <input id="url" type="text" placeholder="Paste URL (e.g., https://www.example.com)" />
   <button id="go">Analyze</button>
-  <button id="clear">Clear</button> <!-- fixed: lowercase id -->
+  <button id="clear">Clear</button>
 </div>
 
   <div id="banner" class="banner" style="display:none;"></div>
@@ -103,12 +103,11 @@
 </div>
 
 <script>
-const API = "http://localhost:9000";
+const API = "http://127.0.0.1:8000";   // FIXED BACKEND URL
 
 function normalize(input) {
   input = input.trim();
   if (!input) return input;
-  // If missing scheme, default to https
   if (!/^https?:\/\//i.test(input)) {
     input = "https://" + input;
   }
@@ -134,9 +133,9 @@ function showBanner(msg) {
 }
 
 function hideBanner() {
-  const el = document.getElementById("banner");
-  el.style.display = "none";
+  document.getElementById("banner").style.display = "none";
 }
+
 function clearAll() {
   document.getElementById("url").value = "";
   document.getElementById("result").style.display = "none";
@@ -165,12 +164,10 @@ async function analyze() {
       return;
     }
 
-    // Verdict badge
     const vEl = document.getElementById("verdict");
     vEl.className = verdictClass(data.verdict, data.risk);
     vEl.textContent = verdictText(data.verdict, data.risk);
 
-    // Details
     document.getElementById("result").style.display = "block";
     document.getElementById("host").textContent = data.canonical_host || "-";
     document.getElementById("resolved_ip").textContent = data.resolved_ip || "-";
@@ -179,15 +176,17 @@ async function analyze() {
     const loc = data.ip_geolocation || {};
     document.getElementById("location").textContent = `${loc.city || "-"}, ${loc.country || "-"}`;
     document.getElementById("org").textContent = loc.org || "-";
+
     const whois = data.whois || {};
     document.getElementById("registrar").textContent = whois.registrar || "Unavailable";
-    document.getElementById("domain_age").textContent = (whois.domain_age_days !== undefined && whois.domain_age_days !== "Unavailable")
-      ? `${whois.domain_age_days} days`
-      : "Unavailable days";
+    document.getElementById("domain_age").textContent =
+      whois.domain_age_days !== null && whois.domain_age_days !== undefined
+        ? `${whois.domain_age_days} days`
+        : "Unavailable days";
+
     document.getElementById("content_type").textContent = data.content_type || "-";
     document.getElementById("content_length").textContent = data.content_length || "-";
 
-    // Reasons, redirects, traceroute
     document.getElementById("reasons").textContent = (data.reasons || []).join("\n") || "-";
     document.getElementById("redirects").textContent = (data.redirects || [])
       .map(r => `${r.status} ${r.url}${r.location ? " → " + r.location : ""}`).join("\n") || "-";
