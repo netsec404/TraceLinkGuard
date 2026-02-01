@@ -175,7 +175,7 @@ def classify_risk(
     content_type: str,
     final_scheme: str,
     whois_info: Dict[str, Any],
-) -> (str, str, List[str]):
+) -> tuple[str, str, list[str]]:
     """
     Hardened risk engine:
     - Uses TLD, WHOIS age, WHOIS availability, org, redirects, scheme, content-type, URL keywords.
@@ -394,11 +394,11 @@ async def analyze(url: str = Query(..., description="URL to analyze fully")):
     )
 
     # 9) Example override for Google
-    if host in ("google.com", "www.google.com"):
-        resolved_ip = resolved_ip or "172.217.24.132"
-        all_ips = all_ips or ["172.217.24.132"]
-        ip_geo = {"city": "Chennai", "country": "IN", "org": "AS15169 Google LLC"}
-        content_type = content_type or "text/html; charset=ISO-8859-1"
+    if host in ("example.com", "www.example.com"):
+        resolved_ip = resolved_ip or "93.184.216.34"
+        all_ips = all_ips or ["93.184.216.34"]
+        ip_geo = {"city": "N/A", "country": "US", "org": "IANA"}
+        content_type = content_type or "text/html"
         content_length = content_length or None
 
     # 10) Response
